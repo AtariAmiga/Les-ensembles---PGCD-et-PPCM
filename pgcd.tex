@@ -1,0 +1,99 @@
+Les ensembles sont partout. En voici un nouvel exemple!
+\section{Ensemble est multiensembles}
+Un ensemble ne peut contenir qu'une seule fois un même élément, ce qui ne permet pas de contenir la liste des nombres premiers qui décomposent un nombre entier. Deux solutions s'offrent à nous:
+\begin{itemize}
+    \item Utiliser un multiensemble qui peut contenir plusieurs fois le même élément.
+    \item Représenter un multiensemble sous la forme d'un ensemble de couples uniques
+\end{itemize}
+
+\paragraph{Notation du multiensembles}
+La notation du multiensemble est $\mset{}$. À ne pas confondre avec un ensemble en contenant un autre $\{\{\}\}$.
+
+Exemple:
+\[A=\mset{chien;chat;chat;oiseau}\]
+
+\paragraph{Multiensembles sous la forme d'un ensemble de couples}
+On peut aussi écrire $A$ sous forme d'un ensemble de couples, chaque couple étant unique:
+\[A=\{(chien;1);(chat;2);(oiseau;1);(elephant;0)\}\]
+
+Généralisation:
+\begin{itemize}
+    \item Soit $U$ l'univers dans lequel on peut piocher les valeurs pour peupler les multiensembles qui nous intéressent.
+    \item Soit $M$ un multiensemble, et $x$ un élément de $M$ appartenant à $U$
+    \item Soit $m(x): U \rightarrow \mathbb{N}$ la fonction qui donne la multiplicité de $x$ dans le multiensemble
+\end{itemize}
+\begin{gather*}
+    M=\{(x_1; m_M(x_1)); \ (x_2; m_M(x_2)); \ (x_3; m_M(x_4)); \ ...(x_n; m_M(x_n))\}
+\end{gather*}
+
+Dans l'exemple précédent, on a:
+\[m_A(chien)=1;\quad m_A(chat)=2;\quad m_A(oiseau)=1\]
+
+
+\section{Multiensembles de nombres premiers et décomposition}
+Dans notre cas de PPCM et PGCD et de décomposition en nombres premiers, on prendra $U=\mathbb{N}$, plus précisément $U=\mathbb{P}$, l'ensemble des nombres premiers.
+
+\paragraph{Exemple}
+Soit A la décomposition en nombres premiers de $150$:
+\begin{gather*}
+    150 = 2 \times 3 \times 5 \times 5 = 2^1 \times 3^1 \times 5^2 \\
+    A = \mset{2;3;5;5}=\{(2,1);(3,1);(5,2)\}
+\end{gather*}
+
+\paragraph{Généralisation}
+Soit le multiensemble $A$, où $p_1, p_2, ...p_n$ sont contenus dans $A$ zéro ou plusieurs fois.
+
+La décomposition en nombres premiers de $e \in \mathbb{N}$ est le multiensemble $D(e)$ de tous les nombres $p$ premiers qui divisent $e$:
+\begin{gather*}  
+    D(e) = \mset{p \in \mathbb{P} : p\mid e } \\
+    e = \prod_{p \in D(e)} p \\
+\end{gather*}    
+
+Soit $p \in U$ et soit $m(p): U \rightarrow \mathbb{N}$ la fonction qui donne la multiplicité de $p$. On écrit alors la décomposition sous forme d'un ensemble de couples:
+\begin{gather*}  
+    D(e)=\{(2; m(2)); (3; m(3)); (5; m(5)); ...(p; m(p))...\} \\
+    e = \prod_{p \in D(e)} p^{m(p)}
+\end{gather*}    
+
+\section{Union et intersection de multiensembles}
+L'union et l'intersection sont définies à partir des multiplicités:
+\begin{gather*}
+    C = A\cup B: \quad m_{C}(x)=\Max(m_{A}(x);\ m_{B}(x))\quad \forall x\in U \\
+    D = A\cap B: \quad m_{D}(x)=\Min(m_{A}(x);\ m_{B}(x))\quad \forall x\in U
+\end{gather*}
+
+Explication: 
+\begin{itemize}
+    \item Si $x \notin A$, on a $m_A(x)=0$, ce qui donne $min(0; m_B(x))=0$, donc $x \notin A \cap B$
+    \item Si $x$ est 2 fois dans $A$ et 3 dans $B$, on doit en trouver 3 pour l'union, d'où $max(2, 3)=3$
+\end{itemize}
+
+\section{Le PGCD est une intersection}
+
+Le \textbf{P}lus \textbf{G}rand \textbf{C}ommun \textbf{D}iviseur des nombres entiers $a$ et $b$ est le plus grand nombre qui peut diviser $a$ et diviser $b$ (donc sans reste). C'est le nombre qui est composé de tous les diviseurs premiers communs de $a$ et de $b$:
+   
+Prenons un exemple:
+\begin{gather*}  
+    D(150)=\mset{2;3;5;5} = \{(2;1);(3;1);(5;2)\}\\
+    D(45)=\mset{3;3;5} = \{(3;2);(5;1)\}\\
+    D(PGCD(150; 45)) = D(45) \cap D(150)=\mset{3;5} = \{(2;0);(3;1);(5;1)\}\\
+    PGCD(150; 45) = 3 \times 5 = 2^0 \times 3^1 \times 5^1 = 15
+\end{gather*}
+
+La décomposition en nombres premiers du PGCD, est l'intersection des décompositions des deux nombres:
+\[\boxed{D(PGCD(a; b)) = D(a) \boldsymbol{\cap} D(b)}\]
+
+\section{Le PPCM est une union}
+Le \textbf{P}lus \textbf{P}etit \textbf{C}ommun \textbf{M}ultiple de deux nombres entiers $a$ et $b$, est le plus petit nombre divisible par $a$ et divisible par $b$. Il est donc un multiple à la fois de $a$ et de $b$.
+
+Prenons un exemple:
+\begin{gather*}  
+    D(150)=\mset{2;3;5;5}=\{(2;1);(3;1);(5;2)\} \\
+    D(45)=\mset{3;3;5}=\{(3;2);(5;1)\} \\
+    D(PPCM(150; 45)) = D(150) \boldsymbol{\cup} D(45) = \mset{2; 3; 3; 5; 5} = \{(2;1);(3;2);(5;2)\} \\
+    \displaystyle PPCM(150; 45) = 2 \times 3 \times 3 \times 5 \times 5 = 2^1 \times 3^2 \times 5^2 =450
+\end{gather*}
+
+La décomposition en nombres premiers du PGCD, est l'union des décompositions des deux nombres:
+\[\boxed{D(PGCD(a; b)) = D(a) \boldsymbol{\cup} D(b)}\]
+
